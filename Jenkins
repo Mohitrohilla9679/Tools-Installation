@@ -14,3 +14,8 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt-get update -y
 sudo apt-get install jenkins -y
+
+# By default jenkins run on port 8080 you can access jenkins by using (your_ip_address:8080)
+# When you try to login it ask for a default password you can access password by following command
+
+#   ----->>     sudo cat /var/lib/jenkins/secrets/initialAdminPassword
