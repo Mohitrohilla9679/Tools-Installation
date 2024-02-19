@@ -52,4 +52,4 @@ sudo systemctl daemon-reload
 sudo systemctl start prometheus
 sudo systemctl enable prometheus
 
-# After this go to your_ip:9090
+# After this go to  http://public_ip:9090
