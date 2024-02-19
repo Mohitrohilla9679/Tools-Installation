@@ -1,0 +1,59 @@
+#   What is Node_Exporter
+
+Node exporter is like a “reporter” tool for Prometheus, which helps collect and provide information about a computer (node) so Prometheus can monitor it.
+It gathers data about things like CPU usage, memory, disk space, and network activity on that computer.
+
+A Node Port Exporter is a specific kind of Node Exporter that is used to collect information about network ports on a computer.
+It tells Prometheus which network ports are open and what kind of data is going in and out of those ports.
+This information is useful for monitoring network-related activities and can help you ensure that your applications and services are running smoothly and securely.
+
+****  Run the following commands for installation  ****
+
+# Create a system user for Node Exporter
+sudo useradd --system --no-create-home --shell /bin/false node_exporter
+
+# Download Node Exporter
+wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
+
+# Extract Node Exporter files, move the binary, and clean up
+tar -xvf node_exporter-1.6.1.linux-amd64.tar.gz
+sudo mv node_exporter-1.6.1.linux-amd64/node_exporter /usr/local/bin/
+rm -rf node_exporter*
+
+# Create a systemd unit configuration file for Node Exporter
+sudo tee /etc/systemd/system/node_exporter.service > /dev/null <<EOF
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+StartLimitIntervalSec=500
+StartLimitBurst=5
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/node_exporter --collector.logind
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Enable and start Node Exporter
+sudo systemctl enable node_exporter
+sudo systemctl start node_exporter
+
+# Check the status of Node Exporter
+sudo systemctl status node_exporter
+
+# For Uninstall Node_Exporter
+sudo systemctl stop node_exporter
+sudo systemctl disable node_exporter
+sudo rm /etc/systemd/system/node_exporter.service
+sudo rm /usr/local/bin/node_exporter
+sudo userdel node_exporter
+sudo groupdel node_exporter
+sudo systemctl daemon-reload
