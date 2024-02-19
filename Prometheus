@@ -53,3 +53,13 @@ sudo systemctl start prometheus
 sudo systemctl enable prometheus
 
 # After this go to  http://public_ip:9090
+
+# To Uninstall Prometheus
+
+sudo systemctl stop prometheus
+sudo systemctl disable prometheus
+sudo rm /etc/systemd/system/prometheus.service
+sudo rm -rf /usr/local/bin/prometheus /etc/prometheus /data
+sudo userdel prometheus
+sudo systemctl daemon-reload
+
