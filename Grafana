@@ -16,3 +16,13 @@ sudo systemctl start grafana-server
 sudo systemctl status grafana-server
 
 # Grafan will run on port 3000
+
+# To Uninstall Grafana 
+sudo systemctl stop grafana-server
+sudo systemctl disable grafana-server
+sudo apt-get remove --purge grafana
+sudo rm -rf /etc/grafana /var/lib/grafana /var/log/grafana
+sudo deluser grafana
+sudo delgroup grafana
+sudo systemctl daemon-reload
+
