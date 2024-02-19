@@ -7,7 +7,7 @@ sudo apt install default-jre -y
 
 # For referral [https://www.jenkins.io/doc/book/installing/linux/]
 
-sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+sudo wget -q -O /usr/share/keyrings/jenkins-keyring.asc \
   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
@@ -18,4 +18,12 @@ sudo apt-get install jenkins
 # By default jenkins run on port 8080 you can access jenkins by using (your_ip_address:8080)
 # When you try to login it ask for a default password you can access password by following command
 
-#   ----->>     sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+# To Uninstall Jenkins
+
+sudo systemctl stop jenkins
+sudo apt-get remove --purge jenkins -y
+sudo rm -f /etc/apt/sources.list.d/jenkins.list
+sudo apt-get update
+
